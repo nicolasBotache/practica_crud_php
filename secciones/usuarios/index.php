@@ -1,6 +1,15 @@
 <?php 
 include("../../bd.php"); 
 
+if(isset($_GET['txtID'])){ 
+    $txtID=(isset($_GET['txtID']))?$_GET['txtID']:"";
+    $sentencia=$conexion->prepare("DELETE FROM tbl_usuarios WHERE id=:id");
+    $sentencia->bindParam(":id",$txtID);
+    $sentencia->execute();
+    header("location:index.php");
+ }
+
+
 $sentencia =$conexion->prepare("SELECT * FROM `tbl_usuarios`");
 $sentencia->execute();
 $lista_tbl_usuarios=$sentencia->fetchALL(PDO::FETCH_ASSOC);
