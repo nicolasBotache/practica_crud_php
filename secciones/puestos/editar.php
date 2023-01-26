@@ -37,7 +37,7 @@ if(isset($_GET['txtID'])){
         <form action="" method="post" enctype="multipart/form-data">
           
         <div class="mb-3">
-          <label for="txtID" class="form-label">Name</label>
+          <label for="txtID" class="form-label">ID</label>
           <input type="text"
           value="<?php echo $txtID;?>"
             class="form-control" readonly name="txtID" id="txtID" aria-describedby="helpId" placeholder="ID">
