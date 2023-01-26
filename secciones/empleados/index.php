@@ -1,3 +1,21 @@
+<?php
+   include("../../bd.php");
+
+
+   $sentencia =$conexion->prepare("SELECT *,
+   (SELECT nombredelpuesto FROM tbl_puestos 
+   WHERE tbl_puestos.id=tbl_empleados.idpuesto limit 1) as puesto
+   FROM `tbl_empleados`");
+   $sentencia->execute();
+   $lista_tbl_empleados=$sentencia->fetchALL(PDO::FETCH_ASSOC);
+
+
+
+
+?>   
+
+
+
 <?php include("../../templates/header.php");?>
 
 <br/>
@@ -11,6 +29,7 @@
             <table class="table">
                 <thead>
                     <tr>
+                        <th>ID</th>
                         <th scope="col">Nombre</th>
                         <th scope="col">Foto</th>
                         <th scope="col">Cv</th>
@@ -21,15 +40,27 @@
                 </thead>
                 <tbody>
                     <tr class="">
-                        <td scope="row">Nicolas</td>
-                        <td>imagen.jpg</td>
-                        <td>cv.pdf</td>
-                        <td>Programado jr</td>
-                        <td>12/12/2022</td>
+
+                    <?php foreach($lista_tbl_empleados as $registro) {?>
+
+                        <td><?php echo $registro['id'];?></td>
+                        <td scope="row">
+                            <?php echo $registro['primernombre'];?>
+                            <?php echo $registro['segundonombre'];?>
+                            <?php echo $registro['primerapellido'];?>
+                            <?php echo $registro['segundoapellido'];?>
+                        </td>
+
+                        <td><?php echo $registro['foto'];?></td>
+                        <td><?php echo $registro['cv'];?></td>
+                        <td><?php echo $registro['puesto'];?></td>
+                        <td><?php echo $registro['fechadeingreso'];?></td>
+
                         <td><a name="" id="" class="btn btn-primary" href="#" role="button">Carta</a>|
                         <a name="" id="" class="btn btn-info" href="#" role="button">Editar</a>|
                         <a name="" id="" class="btn btn-danger" href="#" role="button">Eliminar</a></td>
                     </tr>
+                    <?php }?>
                 </tbody>
             </table>
         </div>
