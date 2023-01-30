@@ -51,7 +51,10 @@
                             <?php echo $registro['segundoapellido'];?>
                         </td>
 
-                        <td><?php echo $registro['foto'];?></td>
+                        <td>
+                            <img width="50" src="<?php echo $registro['foto'];?>" 
+                             alt="">
+                        </td>
                         <td><?php echo $registro['cv'];?></td>
                         <td><?php echo $registro['puesto'];?></td>
                         <td><?php echo $registro['fechadeingreso'];?></td>
