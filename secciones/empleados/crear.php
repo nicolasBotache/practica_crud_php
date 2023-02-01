@@ -20,15 +20,21 @@
   $sentencia->bindParam(":primerapellido",$primerapellido);
   $sentencia->bindParam(":segundoapellido",$segundoapellido);
   
-  $fecha_foto=new DateTime();
-  $nombreArchivo_foto=($foto!='')?$fecha_foto->getTimestamp()."_".$_FILES["foto"]['name']:"";
+  $fecha_=new DateTime();
+  $nombreArchivo_foto=($foto!='')?$fecha_->getTimestamp()."_".$_FILES["foto"]['name']:"";
   $tmp_foto=$_FILES["foto"]['tmp_name'];
   if($tmp_foto!=''){
       move_uploaded_file($tmp_foto,"./".$nombreArchivo_foto);
   }
   $sentencia->bindParam(":foto",$nombreArchivo_foto);
+
+  $nombreArchivo_cv=($cv!='')?$fecha_->getTimestamp()."_".$_FILES["cv"]['name']:"";
+  $tmp_cv=$_FILES["cv"]['tmp_name'];
+  if($tmp_cv!=''){
+      move_uploaded_file($tmp_cv,"./".$nombreArchivo_cv);
   
-  $sentencia->bindParam(":cv",$cv);
+  
+  $sentencia->bindParam(":cv",$nombreArchivo_cv);
   
   
   $sentencia->bindParam(":idpuesto",$idpuesto);
@@ -37,22 +43,22 @@
   header("location:index.php");
 
  }
+}
    $sentencia =$conexion->prepare("SELECT * FROM `tbl_puestos`");
    $sentencia->execute();
    $lista_tbl_puestos=$sentencia->fetchALL(PDO::FETCH_ASSOC);
 
-
-
-
-
-
-
-
-
-
-
-
 ?>
+
+
+
+
+
+
+
+
+
+
 <?php include("../../templates/header.php");?>
 <br/>
 <div class="card">

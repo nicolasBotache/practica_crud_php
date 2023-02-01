@@ -40,7 +40,7 @@
                         <td><?php echo $registro['nombredelpuesto'];?></td>
                         <td>
                         <a class="btn btn-info" href="editar.php?txtID=<?php echo $registro['id']; ?>" role="button">Editar</a> |
-                            <a class="btn btn-danger" href="index.php?txtID=<?php echo $registro['id']; ?>" role="button">Eliminar</a>
+                        <a class="btn btn-danger" href="index.php?txtID=<?php echo $registro['id']; ?>" role="button">Eliminar</a>
                         </td>
                     </tr>
                 <?php }?>
