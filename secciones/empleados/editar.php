@@ -11,19 +11,67 @@ if(isset($_GET['txtID'])){
     $segundonombre=$registro["segundonombre"];
     $primerapellido=$registro["primerapellido"];
     $segundoapellido=$registro["segundoapellido"];
-    $foto=$registro["foto"];
-    $cv=$registro["cv"];
     $idpuesto=$registro["idpuesto"];
     $fechadeingreso=$registro["fechadeingreso"];
 
     $sentencia =$conexion->prepare("SELECT * FROM `tbl_puestos`");
     $sentencia->execute();
-    $lista_tbl_puestos=$sentencia->fetchALL(PDO::FETCH_ASSOC);
- 
-
-    
+    $lista_tbl_puestos=$sentencia->fetchALL(PDO::FETCH_ASSOC); 
  }
+ if($_POST){ 
+    $txtID=(isset($_POST['txtID']))?$_POST['txtID']:"";
+    $primernombre=(isset($_POST["primernombre"])?$_POST["primernombre"]:"");
+    $segundonombre=(isset($_POST["segundonombre"])?$_POST["segundonombre"]:"");
+    $primerapellido=(isset($_POST["primerapellido"])?$_POST["primerapellido"]:"");
+    $segundoapellido=(isset($_POST["segundoapellido"])?$_POST["segundoapellido"]:"");
+    $idpuesto=(isset($_POST["idpuesto"])?$_POST["idpuesto"]:"");
+    $fechadeingreso=(isset($_POST["fechadeingreso"])?$_POST["fechadeingreso"]:"");
+   
+    $sentencia=$conexion->prepare("
+     UPDATE tbl_empleados 
+     SET
+            primernombre = :primernombre, 
+            segundonombre =:segundonombre,
+            primerapellido = :primerapellido,
+            segundoapellido = :segundoapellido,
+            idpuesto =:idpuesto,
+            fechadeingreso =:fechadeingreso
+    WHERE id =:id " );
+  
+    $sentencia->bindParam(":primernombre",$primernombre);
+    $sentencia->bindParam(":segundonombre",$segundonombre);
+    $sentencia->bindParam(":primerapellido",$primerapellido);
+    $sentencia->bindParam(":segundoapellido",$segundoapellido);
+    $sentencia->bindParam(":idpuesto",$idpuesto);
+    $sentencia->bindParam(":fechadeingreso",$fechadeingreso);
+    $sentencia->bindParam(":id",$txtID);
+    $sentencia->execute();
 
+    $foto=(isset($_FILES["foto"] ['name'])?$_FILES["foto"]['name']:"");
+    
+    $fecha_=new DateTime();
+    $nombreArchivo_foto=($foto!='')?$fecha_->getTimestamp()."_".$_FILES["foto"]['name']:"";
+    $tmp_foto=$_FILES["foto"]['tmp_name'];
+    if($tmp_foto!=''){
+        move_uploaded_file($tmp_foto,"./".$nombreArchivo_foto);
+        $sentencia=$conexion->prepare("UPDATE tbl_empleados SET foto =:foto WHERE id =:id " );
+        $sentencia->bindParam(":foto",$nombreArchivo_foto);
+        $sentencia->bindParam(":id",$txtID);
+        $sentencia->execute();
+    
+    }
+   
+
+
+
+    $cv=(isset($_FILES["cv"] ['name'])?$_FILES["cv"] ['name']:"");
+    
+    
+    
+    // header("location:index.php");
+  
+   }
+  
 
 
 
@@ -94,7 +142,7 @@ if(isset($_GET['txtID'])){
                 <div class="mb-3">
                     <label for="cv" class="form-label">CV(pdf):</label>
                      </br>
-                     <a href=""<?php echo $cv;?>"">"<?php echo $cv;?>"</a>  
+                     <a href="<?php echo $cv;?>"> <?php echo $cv;?> </a>  
                     <input type="file"
                      
                         class="form-control" name="cv" id="cv" aria-describedby="helpId" placeholder="cv">

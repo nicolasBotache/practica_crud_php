@@ -87,12 +87,12 @@
                         <td><?php echo $registro['puesto'];?></td>
                         <td><?php echo $registro['fechadeingreso'];?></td>
 
-                        <td>
-                            <a name="" id="" class="btn btn-primary" href="#" role="button">Carta</a> |
+                        <td class ="p-0">
+                            <a name="" id="" class="btn btn-primary p-1" href="#" role="button">Carta</a> |
 
-                            <a class="btn btn-info" href="editar.php?txtID=<?php echo $registro['id']; ?>" role="button">Editar</a> | 
+                            <a class="btn btn-info p-1" href="editar.php?txtID=<?php echo $registro['id']; ?>" role="button">Editar</a> | 
 
-                            <a class="btn btn-danger" href="index.php?txtID=<?php echo $registro['id']; ?>" role="button">Eliminar</a>
+                            <a class="btn btn-danger p-1" href="index.php?txtID=<?php echo $registro['id']; ?>" role="button">Eliminar</a>
                         <td/>
                     </tr>
                     <?php }?>
